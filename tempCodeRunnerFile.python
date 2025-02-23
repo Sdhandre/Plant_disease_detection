@@ -1,0 +1,75 @@
+grammar = { 
+    "S": ["AB"], 
+    "A": ["aA", ""],
+    "B": ["b"] 
+} 
+def compute_first(grammar):
+    first_sets = {non_terminal: set() for non_terminal in grammar}
+
+    def first(symbol):
+        if symbol.islower(): 
+            return {symbol}
+        
+        if symbol in first_sets and first_sets[symbol]:
+            return first_sets[symbol]
+        
+        result = set()
+        for production in grammar.get(symbol, []):
+            for s in production:
+                temp = first(s)
+                result.update(temp - {"ε"})
+                if "ε" not in temp:
+                    break
+            if "ε" in result:
+                result.remove("ε")
+            first_sets[symbol] = result
+        return result
+
+    for non_terminal in grammar:
+        first(non_terminal)
+
+    return first_sets
+
+
+def compute_follow(grammar, first_sets):
+    follow_sets = {non_terminal: set() for non_terminal in grammar}
+
+    follow_sets["S"] = {"$"}
+
+
+    changed = True
+    while changed:
+        changed = False
+        for lhs, productions in grammar.items():
+            for production in productions:
+                for i in range(len(production)):
+                    if production[i].isupper():  
+                        current_non_terminal = production[i]
+                        
+                   
+                        if i + 1 < len(production):
+                            next_symbol = production[i + 1]
+                            first_next = first_sets.get(next_symbol, set())
+                            new_follow = first_next - {"ε"}
+                            if not new_follow.isdisjoint(new_follow):
+                                follow_sets[current_non_terminal].update(new_follow)
+                                changed = True
+                        
+                      
+                        if i + 1 == len(production):
+                            new_follow = follow_sets[lhs]
+                            if not new_follow.isdisjoint(new_follow):
+                                follow_sets[current_non_terminal].update(new_follow)
+                                changed = True
+
+    return follow_sets
+
+
+first_sets = compute_first(grammar)
+
+
+follow_sets = compute_follow(grammar, first_sets)
+
+
+for non_terminal, follow_set in follow_sets.items():
+    print(f"FOLLOW({non_terminal}) = {follow_set}")

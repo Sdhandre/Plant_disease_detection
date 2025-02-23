@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Plant Disease Identifier</title>
+    <link rel="stylesheet" href="/static/stylesdeep.css">
+ 
+</head>
+
+<body>
+    <div class="parallax-container">
+        <!-- Background Layer -->
+        <div class="parallax-layer background-layer"></div>
+
+        <!-- Main Content -->
+        <div class="parallax-layer content-layer">
+            <!-- Navigation -->
+            <nav class="main-nav">
+                <div class="nav-container">
+                    <div class="logo">Plant Health AI</div>
+                    <ul class="nav-links center-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                    <ul class="nav-links right-links">
+                        <li><a href="#" class="signin-btn">Sign In</a></li>
+                        <li><a href="#" class="signup-btn">Sign Up</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Plant Health Diagnosis Made Simple</h1>
+                    <p>Identify and treat plant diseases using our AI-powered detection system.</p>
+
+                    <div class="upload-card">
+                        <div class="upload-header">
+                            <h2>Upload Plant Image</h2>
+                        </div>
+                        <div class="upload-body">
+                            <img src="static/elements/plant-7413415_1280.png" alt="Plant Preview" class="plant-preview">
+                            <form action="/" method="post" enctype="multipart/form-data">
+                                <input type="file" name="file" id="fileInput" hidden accept="image/*" required>
+                                <label for="fileInput" class="upload-btn">Choose File</label>
+                                <button type="submit" class="analyze-btn">Analyze Now</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Diseases Section -->
+            <section class="diseases-section">
+                <div class="disease-grid">
+                    <!-- Powdery Mildew -->
+                    <div class="disease-card fade-up">
+                        <img src="https://img.icons8.com/color/96/000000/mushroom.png" alt="Fungus"
+                            class="disease-icon">
+                        <h3 class="disease-name">Powdery Mildew</h3>
+                        <p class="disease-description">
+                            Fungal infection creating distinctive white powdery spots on leaves,
+                            reducing photosynthetic capability.
+                        </p>
+                        <div class="severity-indicator">
+                            <div class="severity-dot"></div>
+                            High Severity
+                        </div>
+                    </div>
+
+                    <!-- Leaf Spot -->
+                    <div class="disease-card fade-up">
+                        <img src="https://img.icons8.com/color/96/000000/leaf.png" alt="Leaf" class="disease-icon">
+                        <h3 class="disease-name">Leaf Spot</h3>
+                        <p class="disease-description">
+                            Dark circular lesions caused by bacterial or fungal pathogens,
+                            leading to premature leaf drop.
+                        </p>
+                        <div class="severity-indicator">
+                            <div class="severity-dot"></div>
+                            Medium Severity
+                        </div>
+                    </div>
+
+                    <!-- Blight -->
+                    <div class="disease-card fade-up">
+                        <img src="https://img.icons8.com/color/96/000000/wither.png" alt="Blight" class="disease-icon">
+                        <h3 class="disease-name">Blight</h3>
+                        <p class="disease-description">
+                            Rapid yellowing and tissue decay, often spreading quickly
+                            through entire plant systems.
+                        </p>
+                        <div class="severity-indicator">
+                            <div class="severity-dot"></div>
+                            Critical Severity
+                        </div>
+                    </div>
+
+                    <!-- Root Rot -->
+                    <div class="disease-card fade-up">
+                        <img src="https://img.icons8.com/color/96/000000/root.png" alt="Roots" class="disease-icon">
+                        <h3 class="disease-name">Root Rot</h3>
+                        <p class="disease-description">
+                            Caused by excessive moisture, leading to root system decay
+                            and impaired nutrient uptake.
+                        </p>
+                        <div class="severity-indicator">
+                            <div class="severity-dot"></div>
+                            High Severity
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.disease-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+
+</html>

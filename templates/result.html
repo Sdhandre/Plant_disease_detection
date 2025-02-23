@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prediction Result</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Main Container */
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 15px;
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in-out;
+            margin-bottom: 30px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Headings & Images */
+        h2 {
+            color: #f1f1f1;
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 10px rgba(243, 231, 231, 0.4);
+        }
+
+        img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Prediction Highlight */
+        .highlight {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ffcc00;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Details Section */
+        .details {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .details p {
+            margin: 10px 0;
+            font-size: 1rem;
+            color: #f1f1f1;
+        }
+
+        .highlight-text {
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+            color: #ffffff;
+        }
+
+        .desc-text {
+            color: #ffdd57;
+            font-weight: 500;
+        }
+
+        .cause,
+        .cause-text {
+            color: #ff6b6b;
+            font-weight: 500;
+        }
+
+        .solution,
+        .solution-text {
+            color: #00d1b2;
+            font-weight: 500;
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            background: #ff6b6b;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .btn:hover {
+            background: #e84118;
+            transform: scale(1.05);
+        }
+
+        /* Past Predictions */
+        .past-predictions {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .past-predictions h3 {
+            margin-bottom: 15px;
+            color: #ffcc00;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.3);
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        td {
+            background: rgba(255, 255, 255, 0.2);
+            color: #f1f1f1;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .highlight {
+                font-size: 1.5rem;
+            }
+
+            .details p {
+                font-size: 0.9rem;
+            }
+
+            .btn {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Prediction Result</h2>
+        <!-- Display Uploaded Image -->
+        <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image" />
+        <p class="highlight">Detected Disease: {{ result }}</p>
+        <div class="details">
+            <p><span class="highlight-text">📝 Description:</span> <span class="desc-text">{{ description }}</span></p>
+            <p><span class="highlight-text cause">⚠️ Cause:</span> <span class="cause-text">{{ cause }}</span></p>
+            <p><span class="highlight-text solution">💡 Solution:</span> <span class="solution-text">{{ solution
+                    }}</span></p>
+        </div>
+        <a href="/" class="btn">Upload Another Image</a>
+    </div>
+    <!-- Past Predictions Section -->
+    {% if past_predictions %}
+    <div class="container past-predictions">
+        <h3>Past Predictions</h3>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>Image</th>
+                    <th>Disease</th>
+                    <th>Date</th>
+                </tr>
+                {% for entry in past_predictions %}
+                <tr>
+                    <td><img src="{{ url_for('static', filename='uploads/' + entry['filename']) }}" alt="Past Image"
+                            width="80" /></td>
+                    <td>{{ entry['result'] }}</td>
+                    <td>{{ entry['timestamp'] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</body>
+
+</html>
