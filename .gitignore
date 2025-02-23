@@ -1,0 +1,3 @@
+*.h5  # Ignore all .h5 model files
+uploads/  # Ignore uploaded images (optional)
+__pycache__/  # Ignore compiled Python files

@@ -5,12 +5,24 @@ from flask import Flask, request, render_template,session
 from tensorflow.keras.preprocessing import image
 from werkzeug.utils import secure_filename
 import secrets 
+import gdown
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 
-# Load the trained model
-model = tf.keras.models.load_model("plant_disease_modelfinal.h5")
+# Google Drive File ID
+file_id = "1VDKnUPsgGDKtLKpuHEvBZx7uNWPDJ__y"
+
+# Model file path
+model_path = "plant_disease_modelfinal.h5"
+
+# Check if model exists, if not download it
+if not os.path.exists(model_path):
+    print("Downloading model file...")
+    gdown.download(f"https://drive.google.com/uc?id={file_id}", model_path, quiet=False)
+    print("Download complete!")
+else:
+    print("Model file already exists.")
 
 class_labels = [
     "Pepper__bell___Bacterial_spot",
