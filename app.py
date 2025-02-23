@@ -11,18 +11,20 @@ app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 
 # Google Drive File ID
-file_id = "1VDKnUPsgGDKtLKpuHEvBZx7uNWPDJ__y"
+MODEL_PATH = "plant_disease_modelfinal.h5"
 
-# Model file path
-model_path = "plant_disease_modelfinal.h5"
+# Google Drive file ID from your link
+GOOGLE_DRIVE_FILE_ID = "1VDKnUPsgGDKtLKpuHEvBZx7uNWPDJ__y"
 
-# Check if model exists, if not download it
-if not os.path.exists(model_path):
-    print("Downloading model file...")
-    gdown.download(f"https://drive.google.com/uc?id={file_id}", model_path, quiet=False)
-    print("Download complete!")
-else:
-    print("Model file already exists.")
+# Function to download model
+def download_model():
+    if not os.path.exists(MODEL_PATH):
+        print("Downloading model...")
+        gdown.download(f"https://drive.google.com/uc?id={GOOGLE_DRIVE_FILE_ID}", MODEL_PATH, quiet=False)
+        print("Download complete.")
+
+# Run model download before loading it
+download_model()
 
 class_labels = [
     "Pepper__bell___Bacterial_spot",
