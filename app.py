@@ -8,6 +8,10 @@ import secrets
 import gdown
 
 app = Flask(__name__)
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))  # Render uses dynamic ports
+    app.run(host="0.0.0.0", port=port)
 app.secret_key = secrets.token_hex(16)
 
 # Google Drive File ID
